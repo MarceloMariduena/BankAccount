@@ -1,45 +1,89 @@
+import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TesterMarceloMariduena {
   public static void main(String[] args){
 	  
-	  // Grizzly checking account created for testing
-	  CheckingAccount grizzlyCheckings = new CheckingAccount("Grizly Bank", "83-BC8273-1934", "Grizzly Checking", 10000.5, 0.05, 1000);
+	  Scanner input = new Scanner(System.in);
+	 
 	  
-	  // Grizzly savings account created for testing
-	  SavingsAccount grizzlySavings = new SavingsAccount("Grizly Bank", "83-BC8273-1935", "Grizzly Savings", 10000.5, 0.05);
+	  // Prompt user for input
+	  System.out.println("Enter bank name: ");
+	  String bankName_ = input.nextLine();
 	  
-	  // Get Grizzly Bank details
-	  grizzlyCheckings.displayDetails();
+	  System.out.println("Enter account number, account name (no spaces), initial balance, annual interest rate (in decimals) and overdraft limit. ");
+	  String accountNumber_ = input.next();
+	  String accountName_ = input.next();
+	  double initialBalance_ = input.nextDouble();
+	  double annualInterestRate_ = input.nextDouble();
+	  double overdraftLimit_ = input.nextDouble();
 	  
-	  // Checks to deposit
-	  Check check1 = new Check(100, 262141335, new java.util.Date(System.currentTimeMillis()), 2000.2, "Atlanta Georgia Bank");
-	  Check check2 = new Check(230, 265441395, new java.util.Date(System.currentTimeMillis()), 2000.2, "Fidelity Bank");
-	  Check check3 = new Check(1090, 282111394, new java.util.Date(System.currentTimeMillis()), 2000.2, "American National Bank");
+	  CheckingAccount GrizzlyCheckings = new CheckingAccount(bankName_, accountNumber_, accountName_, initialBalance_, annualInterestRate_, overdraftLimit_);
 	  
-	  // Checks to clear
-	  Check check4 = new Check(64.14, new java.util.Date(System.currentTimeMillis()));
-	  Check check5 = new Check(82.17, new java.util.Date(System.currentTimeMillis()));
-	  Check check6 = new Check(43.79, new java.util.Date(System.currentTimeMillis()));
-	  Check check7 = new Check(91.36, new java.util.Date(System.currentTimeMillis()));
+	  System.out.println(); // spacing
 	  
-	  // Check deposits
-	  grizzlyCheckings.depositCheck(check1);
-	  grizzlyCheckings.depositCheck(check2);
-	  grizzlyCheckings.depositCheck(check3);
+	  // Time to deposit some checks :)
+	  System.out.println("====== Checks To Deposit ======");
+	  System.out.println("Enter check number, routing number, amount, date (mm/dd/yyy) and bank name.");
+	  System.out.println("Enter 0 (zero) to finish");
 	  
-	  // Checks cleared
-	  grizzlyCheckings.clearCheck(check4);
-	  grizzlyCheckings.clearCheck(check5);
-	  grizzlyCheckings.clearCheck(check6);
-	  grizzlyCheckings.clearCheck(check7);
+	  while (true) {
+		  int num = input.nextInt(); //number
+		  if (num == 0) {
+			  break;
+		  }
+		  int routingNumber = input.nextInt(); //routing number
+		  double amount = input.nextDouble(); //amount
+		  String dateString = input.next(); //date: covert this
+		  String bankName = input.nextLine(); //bank name
+		  
+		  Date tempDate = new Date(); //date object in case invalid date is the input
+		  try {
+			  //Convert the input date string to a Date object
+			  tempDate = new SimpleDateFormat("MM/dd/yyyy").parse(dateString);
+		  } catch (ParseException e) {
+			  e.printStackTrace();
+		  }
+		  
+		  Check tempCheck = new Check(num, routingNumber, tempDate, amount, bankName);
+		  GrizzlyCheckings.depositCheck(tempCheck);
+	  }
 	  
-	  grizzlyCheckings.displayAllChecks();
+	  System.out.println(); // spacing
 	  
-	  grizzlyCheckings.withdraw(100, grizzlySavings);
-	  System.out.printf("Current balance: %.2f \n" , grizzlyCheckings.getBalance());
-	  grizzlyCheckings.withdraw(2500, grizzlySavings);
-	  System.out.printf("Current balance: %.2f \n" , grizzlyCheckings.getBalance());
-	  grizzlyCheckings.withdraw(1000000, grizzlySavings);
+	  // Clearing checks
+	  System.out.println("====== Checks To Clear ======");
+	  System.out.println("Enter check number, amount, date (mm/dd/yyy).");
+	  System.out.println("Enter 0 (zero) to finish");
+		  
+	  while (true) {
+		  int num = input.nextInt(); //number
+		  if (num == 0) {
+			  break;
+		  }
+		  double amount = input.nextDouble(); //amount
+		  String dateString = input.next(); //date: covert this
+		  
+		  Date tempDate = new Date(); //date object in case invalid date is the input
+		  try {
+			  //Convert the input date string to a Date object
+			  tempDate = new SimpleDateFormat("MM/dd/yyyy").parse(dateString);
+		  } catch (ParseException e) {
+			  e.printStackTrace();
+		  }
+		  
+		  Check tempCheck = new Check(num, amount, tempDate);
+		  GrizzlyCheckings.clearCheck(tempCheck);
+	  }
+	  System.out.println(); // spacing
+	  
+	  GrizzlyCheckings.displayAllChecks();
+	  
+
+	  System.out.printf("Current balance: $%.02f", GrizzlyCheckings.getBalance());
+	  
+	  input.close();
   }
 }
