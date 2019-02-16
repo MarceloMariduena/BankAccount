@@ -1,15 +1,14 @@
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Check {
-  private int number = 1000, routingNumber;
-  private static int instanceCounter = 0;
+  private int number, routingNumber;
   Date date;
   private double amount;
   private String bankName;
   
-  public Check(double amount_, Date date_) {
-	  instanceCounter++;
-	  number += instanceCounter;
+  public Check(int number_, double amount_, Date date_) {
+	  number = number_;
 	  amount = amount_;
 	  date = date_;
 	  routingNumber = 0;
@@ -26,7 +25,11 @@ public class Check {
   /****** GETTERS ******/
   public int getNumber() {return number;}
   public int getRoutingNumber() {return routingNumber;}
-  public Date getDate() {return date;}
+  public String getDate() {
+	  SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+	  String dateString = formatter.format(date);
+	  return dateString;
+  }
   public double getAmount() {return amount;}
   public String getBankName() {return bankName;}
 }
