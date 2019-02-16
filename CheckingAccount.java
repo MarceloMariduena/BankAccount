@@ -74,17 +74,27 @@ public class CheckingAccount extends Account{
 	}
   
 	public void displayAllChecks(){
-		System.out.println("Checks deposited: ");
+		System.out.println("======== Transaction History ========");
+		System.out.println("----------- Summar for " + this.getAccountName() + " -----------");
+		System.out.println("======= Checks Deposited ======= ");
+		System.out.println("Number \tDate \t\tAmount \t\t Bank Name \tBank Routing Number");
+		double sumOfChecksDeposited = 0;
 		for (int i = 0; i < checksDeposited.size(); i++) {
-			System.out.println(checksDeposited.get(i).getNumber() + " " + checksDeposited.get(i).getRoutingNumber() + " " + checksDeposited.get(i).getAmount() + " " + checksDeposited.get(i).getDate() + " " + checksDeposited.get(i).getBankName());
+			System.out.println(checksDeposited.get(i).getNumber() + "\t" + checksDeposited.get(i).getDate() + "\t" + checksDeposited.get(i).getAmount() + "\t\t" + checksDeposited.get(i).getBankName() + "\t" + checksDeposited.get(i).getRoutingNumber());
+			sumOfChecksDeposited += checksDeposited.get(i).getAmount();
 		}
+		System.out.println("Total deposited: $" + sumOfChecksDeposited);
 		
 		System.out.println(); // spacing
 		
-		System.out.println("Checks cleared: ");
+		System.out.println("======= Checks cleared ======= ");
+		System.out.println("Number \tDate \tAmount");
+		double sumOfChecksCleared = 0;
 		for (int i = 0; i < checksCleared.size(); i++) {
-			System.out.println(checksCleared.get(i).getNumber() + " " + checksCleared.get(i).getAmount() + " " + checksCleared.get(i).getDate());
+			System.out.println(checksCleared.get(i).getNumber() + "\t" + checksCleared.get(i).getDate() + "\t" + checksCleared.get(i).getAmount());
+			sumOfChecksCleared += checksCleared.get(i).getAmount();
 		}
+		System.out.println("Total cleared: $" + sumOfChecksCleared);
 		
 		System.out.println(); // spacing
 	}
