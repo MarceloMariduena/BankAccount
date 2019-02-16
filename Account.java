@@ -26,6 +26,9 @@ public class Account {
 	}
   
 	/****** GETTERS ******/
+	// Returns bank anme
+	public String getBankName() {return bankName;}
+	
 	// Returns creation date
 	public Date getCreationDate(){return creationDate;}
 	
@@ -49,6 +52,11 @@ public class Account {
 	}
 	
 	/****** SETTERS ******/
+	// Sets bank name
+	public void setBankName(String name) {
+		bankName = name;
+	}
+	
 	// Sets the interest rate
 	public void setInterest(double rate){
 	    annualInterestRate = rate;
