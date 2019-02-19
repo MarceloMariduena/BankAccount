@@ -30,7 +30,7 @@ public class CheckingAccount extends Account{
 
 	@Override
 	public void withdraw(double amt){
-		if (amt <= balance){
+		if (amt <= balance + overdraftLimit){
 			balance -= amt;
 		}
 		else {
